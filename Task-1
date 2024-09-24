@@ -1,0 +1,107 @@
+/* This is a Java program to track and manage student grades. The program allow the user to input grades for different subjects, calculate the average grade
+, and display the overall grade along with any additional information (such as letter grade or GPA).*/
+
+
+import java.util.Scanner;
+
+public class StudentGradeTracker {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the marks of the following subjects out of 100: ");
+
+        // Initialize variables for marks
+        float m1, m2, m3, m4, m5, m6;
+
+        // Input marks for each subject with validation
+        System.out.print("English: ");
+        float ch_English = 4;
+        m1 = getValidMarks(sc);
+
+        System.out.print("Maths: ");
+        float ch_Maths = 3;
+        m2 = getValidMarks(sc);
+
+        System.out.print("Hindi: ");
+        float ch_Hindi = 4;
+        m3 = getValidMarks(sc);
+
+        System.out.print("Science: ");
+        float ch_Science = 2;
+        m4 = getValidMarks(sc);
+
+        System.out.print("Social Science: ");
+        float ch_Social = 4;
+        m5 = getValidMarks(sc);
+
+        System.out.print("General Knowledge: ");
+        float ch_GK = 1;
+        m6 = getValidMarks(sc);
+
+        // Calculating weighted average
+        float totalCredits = ch_English + ch_Maths + ch_Hindi + ch_Science + ch_Social + ch_GK;
+        float weightedSum = (m1 * ch_English) + (m2 * ch_Maths) + (m3 * ch_Hindi) + (m4 * ch_Science) + (m5 * ch_Social) + (m6 * ch_GK);
+        float avg = weightedSum / totalCredits;
+
+        // GPA calculation based on subject grades
+        float gpa_English = getGPA(m1);
+        float gpa_Maths = getGPA(m2);
+        float gpa_Hindi = getGPA(m3);
+        float gpa_Science = getGPA(m4);
+        float gpa_Social = getGPA(m5);
+        float gpa_GK = getGPA(m6);
+
+        // Calculating the total GPA (Weighted GPA)
+        float totalGPA = (gpa_English * ch_English + gpa_Maths * ch_Maths + gpa_Hindi * ch_Hindi +
+                gpa_Science * ch_Science + gpa_Social * ch_Social + gpa_GK * ch_GK) / totalCredits;
+
+        // Output the result
+        System.out.println("\n------ Result ------");
+        System.out.printf("Average Marks ---> %.2f / 100\n", avg);
+        System.out.printf("GPA --->  %.2f / 4\n", totalGPA);
+
+        // Grade calculation based on the overall average
+        if (avg >= 90) {
+            System.out.println("Grade ---> A");
+        } else if (avg >= 80) {
+            System.out.println("Grade ---> B");
+        } else if (avg >= 65) {
+            System.out.println("Grade ---> C");
+        } else if (avg >= 45) {
+            System.out.println("Grade ---> D");
+        } else {
+            System.out.println("Grade ---> Fail");
+        }
+
+        sc.close();  // Close the scanner
+    }
+
+    // Method to calculate GPA for each subject based on marks
+    public static float getGPA(float marks) {
+        if (marks >= 90) {
+            return 4.0f;  // A grade
+        } else if (marks >= 80) {
+            return 3.5f;  // B grade
+        } else if (marks >= 70) {
+            return 3.0f;  // C grade
+        } else if (marks >= 60) {
+            return 2.5f;  // D grade
+        } else if (marks >= 50) {
+            return 2.0f;  // E grade (or passing grade)
+        } else {
+            return 0.0f;  // Fail
+        }
+    }
+
+    // Method to get valid marks (0 to 100)
+    public static int getValidMarks(Scanner sc) {
+        int marks;
+        do {
+            marks = sc.nextInt();
+            if (marks < 0 || marks > 100) {
+                System.out.print("Invalid input! Enter marks between 0 and 100: ");
+            }
+        } while (marks < 0 || marks > 100);
+        return marks;
+    }
+}
+
